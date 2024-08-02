@@ -13,7 +13,7 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -subj "/C=XX/ST=STATE/L=CITY/O=ORGANIZATION/OU=UNIT/CN=localhost"
 
 # Remove default nginx configuration
-RUN rm /etc/nginx/conf.d/default.conf
+RUN rm -f /etc/nginx/conf.d/default.conf
 
 # Copy custom nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
@@ -23,3 +23,5 @@ EXPOSE 443
 
 # Start NGINX
 CMD ["nginx", "-g", "daemon off;"]
+
+
