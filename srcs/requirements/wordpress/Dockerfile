@@ -8,6 +8,10 @@ RUN apk update && apk add --no-cache \
     wget \
     unzip
 
+# Create the www-data user and group
+#RUN addgroup -S www-data && adduser -S www-data -G www-data
+RUN adduser -S www-data -G www-data
+
 # Create the /var/www/html directory
 RUN mkdir -p /var/www/html
 
