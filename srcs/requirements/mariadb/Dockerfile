@@ -3,6 +3,9 @@ FROM alpine:3.14
 # Install MariaDB
 RUN apk update && apk add --no-cache mariadb mariadb-client
 
+# Create the /etc/mysql/conf.d directory
+RUN mkdir -p /etc/mysql/conf.d
+
 # Copy custom configuration
 COPY conf/my.cnf /etc/my.cnf
 
