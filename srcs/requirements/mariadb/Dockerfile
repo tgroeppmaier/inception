@@ -19,7 +19,7 @@
 # EXPOSE 3306
 
 # Start MariaDB
-CMD ["mysqld"]
+# CMD ["mysqld"]
 
 FROM debian:bullseye-slim
 
