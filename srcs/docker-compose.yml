@@ -54,13 +54,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/tgroepp/data/wordpress
+      device: /home/${USER}/data/wordpress
       o: bind
   db_data:
     driver: local
     driver_opts:
       type: none
-      device: /home/tgroepp/data/mysql
+      device: /home/${USER}/data/mysql
       o: bind
 
 networks:
