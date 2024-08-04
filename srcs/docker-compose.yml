@@ -10,7 +10,6 @@ services:
     volumes:
       - wordpress_data:/var/www/html
       - ./requirements/nginx/conf:/etc/nginx/conf.d
-      - ./requirements/nginx/tools:/etc/nginx/ssl
     environment:
       - DOMAIN_NAME=${DOMAIN_NAME}
       - SSL_DAYS_VALID=365
