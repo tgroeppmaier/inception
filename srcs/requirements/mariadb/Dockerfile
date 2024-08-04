@@ -1,37 +1,44 @@
-# FROM alpine:3.14
+# FROM debian:bullseye-slim
 
-# # Install MariaDB
-# RUN apk update && apk add --no-cache mariadb mariadb-client
+# RUN apt-get update && apt-get install -y mariadb-server
 
-# # Create the /etc/mysql/conf.d directory
 # RUN mkdir -p /etc/mysql/conf.d
 
-# # Copy custom configuration
-# COPY conf/my.cnf /etc/my.cnf
+# COPY ./conf/my.cnf /etc/mysql/my.cnf
+# COPY ./tools/init_db.sh /docker-entrypoint-initdb.d/
 
-# # Copy initialization script
-# COPY tools/init_db.sh /docker-entrypoint-initdb.d/
-
-# # Set permissions for the initialization script
 # RUN chmod +x /docker-entrypoint-initdb.d/init_db.sh
 
-# # Expose MariaDB port
 # EXPOSE 3306
 
-# Start MariaDB
 # CMD ["mysqld"]
 
 FROM debian:bullseye-slim
 
+# Install MariaDB server
 RUN apt-get update && apt-get install -y mariadb-server
 
+# Create the /etc/mysql/conf.d directory
 RUN mkdir -p /etc/mysql/conf.d
 
+# Copy custom configuration
 COPY ./conf/my.cnf /etc/mysql/my.cnf
+
+# Copy initialization script
 COPY ./tools/init_db.sh /docker-entrypoint-initdb.d/
 
+# Set permissions for the initialization script
 RUN chmod +x /docker-entrypoint-initdb.d/init_db.sh
 
+# Create mysql user and group
+RUN groupadd -r mysql && useradd -r -g mysql mysql
+
+# Change ownership of necessary directories
+RUN chown -R mysql:mysql /var/lib/mysql /var/run/mysqld /etc/mysql
+
+# Expose MariaDB port
 EXPOSE 3306
 
+# Run mysqld as mysql user
+USER mysql
 CMD ["mysqld"]
