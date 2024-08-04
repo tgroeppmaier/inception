@@ -31,7 +31,7 @@ COPY ./tools/init_db.sh /docker-entrypoint-initdb.d/
 RUN chmod +x /docker-entrypoint-initdb.d/init_db.sh
 
 # Create mysql user and group
-RUN groupadd -r mysql && useradd -r -g mysql mysql
+# RUN groupadd -r mysql && useradd -r -g mysql mysql
 
 # Change ownership of necessary directories
 RUN chown -R mysql:mysql /var/lib/mysql /var/run/mysqld /etc/mysql
