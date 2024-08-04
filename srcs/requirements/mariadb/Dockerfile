@@ -1,12 +1,14 @@
-FROM debian:bullseye-slim
+FROM alpine:3.14
 
-RUN apt-get update && apt-get install -y mariadb-server
+RUN apk update && apk add --no-cache mariadb mariadb-client bash
 
 RUN mkdir -p /var/run/mysqld \
     && chown -R mysql:mysql /var/run/mysqld \
     && chmod 777 /var/run/mysqld
 
-RUN chown -R mysql:mysql /var/lib/mysql
+# Ensure /var/lib/mysql has the correct permissions
+RUN chown -R mysql:mysql /var/lib/mysql \
+    && chmod -R 755 /var/lib/mysql
 
 COPY ./conf/my.cnf /etc/mysql/my.cnf
 COPY ./tools/init_db.sh /docker-entrypoint-initdb.d/
