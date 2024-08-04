@@ -6,6 +6,8 @@ RUN mkdir -p /var/run/mysqld \
     && chown -R mysql:mysql /var/run/mysqld \
     && chmod 777 /var/run/mysqld
 
+RUN chown -R mysql:mysql /var/lib/mysql
+
 COPY ./conf/my.cnf /etc/mysql/my.cnf
 COPY ./tools/init_db.sh /docker-entrypoint-initdb.d/
 
