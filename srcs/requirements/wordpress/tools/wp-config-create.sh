@@ -17,7 +17,10 @@ $(wget -q -O - https://api.wordpress.org/secret-key/1.1/salt/)
 
 \$table_prefix = 'wp_';
 
-define( 'WP_DEBUG', false );
+define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_LOG', true );
+define( 'WP_DEBUG_DISPLAY', false );
+define( 'SCRIPT_DEBUG', true );
 
 if ( ! defined( 'ABSPATH' ) ) {
     define( 'ABSPATH', __DIR__ . '/' );
@@ -37,8 +40,6 @@ find /var/www/html -type d -exec chmod 755 {} \;
 find /var/www/html -type f -exec chmod 644 {} \;
 
 # Don't exit, let the CMD continue to PHP-FPM
-
-
 
 
 
