@@ -1,63 +1,31 @@
-FROM alpine:3.14
+FROM php:7.4-fpm-alpine
 
-# Install dependencies
-RUN apk update && apk add --no-cache \
-    php7 \
-    php7-fpm \
-    php7-mysqli \
-    php7-json \
-    php7-openssl \
-    php7-curl \
-    php7-zlib \
-    php7-xml \
-    php7-phar \
-    php7-intl \
-    php7-dom \
-    php7-xmlreader \
-    php7-ctype \
-    php7-session \
-    php7-mbstring \
-    wget \
-    unzip
+# Install necessary PHP extensions and other dependencies
+RUN apk add --no-cache \
+    mysql-client \
+    netcat-openbsd \
+    && docker-php-ext-install mysqli pdo pdo_mysql
 
-# # Ensure www-data user exists
-# RUN if ! id -u www-data > /dev/null 2>&1; then \
-#         adduser -D -H -u 82 -s /sbin/nologin www-data; \
-#     fi
+# Install wp-cli
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+    && chmod +x wp-cli.phar \
+    && mv wp-cli.phar /usr/local/bin/wp
 
-# Create the www-data user and group
-#RUN addgroup -S www-data && adduser -S www-data -G www-data
-RUN adduser -S www-data -G www-data
-
-# Create the /var/www/html directory
-RUN mkdir -p /var/www/html
-
-# Install WordPress
-RUN wget https://wordpress.org/latest.zip \
-    && unzip latest.zip \
-    && mv wordpress/* /var/www/html/ \
-    && rm latest.zip \
-    && chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
-
-# Configure PHP-FPM
-COPY conf/www.conf /etc/php7/php-fpm.d/www.conf
-
-# Set up WordPress configuration
-COPY tools/wp-config-create.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/wp-config-create.sh
-
-# Set working directory
+# Set up WordPress
 WORKDIR /var/www/html
+RUN wp core download --allow-root
 
-# Expose port 9000 for PHP-FPM
+# Set up entrypoint script
+COPY ./tools/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 EXPOSE 9000
 
-# Start PHP-FPM and run the WordPress setup script
-CMD ["/bin/sh", "-c", "/usr/local/bin/wp-config-create.sh && php-fpm7 -F"]
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD php-fpm -v || exit 1
 
-
-
+ENTRYPOINT ["/usr/local/bin/wp-config-create.sh"]
+CMD ["php-fpm"]
 
 
 
