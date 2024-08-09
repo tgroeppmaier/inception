@@ -15,20 +15,17 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 WORKDIR /var/www/html
 RUN wp core download --allow-root
 
-# Set up WordPress configuration
-COPY tools/wp-config-create.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/wp-config-create.sh
-
+# Set up entrypoint script
+COPY ./tools/wordpress-setup.sh /wordpress-setup.sh
+RUN chmod +x /wordpress-setup.sh
 
 EXPOSE 9000
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD php-fpm -v || exit 1
 
-ENTRYPOINT ["/usr/local/bin/wp-config-create.sh"]
+ENTRYPOINT ["/wordpress-setup.sh"]
 CMD ["php-fpm"]
-
-
 
 # FROM alpine:3.14
 
