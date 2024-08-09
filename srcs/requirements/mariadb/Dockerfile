@@ -13,7 +13,7 @@ RUN chmod +x /docker-entrypoint-initdb.d/init_db.sh
 
 EXPOSE 3306
 
-CMD ["sh", "-c", "/docker-entrypoint-initdb.d/init_db.sh && exec mysqld"]
+CMD ["/docker-entrypoint-initdb.d/init_db.sh"]
 
 # FROM alpine:3.14
 
