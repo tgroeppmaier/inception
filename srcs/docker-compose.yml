@@ -1,3 +1,5 @@
+version: '3'
+
 services:
   nginx:
     build: 
@@ -30,6 +32,11 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "php", "-v"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
     restart: always
     networks:
       - inception_network
@@ -51,6 +58,8 @@ services:
       timeout: 5s
       retries: 3
     restart: always
+    networks:
+      - inception_network
 
 volumes:
   wordpress_data:
@@ -58,72 +67,3 @@ volumes:
 
 networks:
   inception_network:
-# version: '3'
-
-# services:
-#   nginx:
-#     build: 
-#       context: ./requirements/nginx
-#       dockerfile: Dockerfile
-#     ports:
-#       - "443:443"
-#     volumes:
-#       - wordpress_data:/var/www/html
-#       - ./requirements/nginx/conf:/etc/nginx/conf.d
-#     environment:
-#       - DOMAIN_NAME=${DOMAIN_NAME}
-#       - SSL_DAYS_VALID=365
-#     depends_on:
-#       - wordpress
-#     restart: always
-#     networks:
-#       - inception_network
-
-#   wordpress:
-#     build: 
-#       context: ./requirements/wordpress
-#       dockerfile: Dockerfile
-#     volumes:
-#       - wordpress_data:/var/www/html
-#     environment:
-#       - MYSQL_DATABASE=${MYSQL_DATABASE}
-#       - MYSQL_USER=${MYSQL_USER}
-#       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-#     depends_on:
-#       - mariadb
-#     restart: always
-#     networks:
-#       - inception_network
-
-#   mariadb:
-#     build:
-#       context: ./requirements/mariadb
-#       dockerfile: Dockerfile
-#     volumes:
-#       - db_data:/var/lib/mysql
-#     environment:
-#       - MYSQL_DATABASE=${MYSQL_DATABASE}
-#       - MYSQL_USER=${MYSQL_USER}
-#       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-#       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-#     restart: always
-#     networks:
-#       - inception_network
-
-# volumes:
-#   wordpress_data:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       device: /home/${USER}/data/wordpress
-#       o: bind
-#   db_data:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       device: /home/${USER}/data/mysql
-#       o: bind
-
-# networks:
-#   inception_network:
-#     driver: bridge
