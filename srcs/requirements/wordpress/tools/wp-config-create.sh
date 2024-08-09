@@ -33,10 +33,10 @@ fi
 
 # Ensure correct permissions
 chown -R www-data:www-data /var/www/html
-chmod -R 755 /var/www/html
+find /var/www/html -type d -exec chmod 755 {} \;
+find /var/www/html -type f -exec chmod 644 {} \;
 
 # Don't exit, let the CMD continue to PHP-FPM
-
 
 
 
