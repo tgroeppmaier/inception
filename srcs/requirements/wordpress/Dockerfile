@@ -15,9 +15,10 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 WORKDIR /var/www/html
 RUN wp core download --allow-root
 
-# Set up entrypoint script
-COPY ./tools/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Set up WordPress configuration
+COPY tools/wp-config-create.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/wp-config-create.sh
+
 
 EXPOSE 9000
 
