@@ -23,9 +23,11 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 
     # Stop MySQL
     mysqladmin -u root -p${MYSQL_ROOT_PASSWORD} shutdown
+    echo "db successfully initialized"
 else
     # If the database is already initialized, just start MySQL
     exec mysqld --user=mysql
+    echo "db was already initialized"
 fi
 
 # Start MySQL in the foreground
