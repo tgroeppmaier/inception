@@ -5,7 +5,7 @@ FROM alpine:3.14
 RUN apk update && apk add --no-cache nginx openssl
 
 # Create www-data user and group
-RUN addgroup -S www-data && adduser -S -G www-data www-data
+RUN adduser -S -G www-data www-data
 
 # Create directory for SSL certificates
 RUN mkdir -p /etc/nginx/ssl
