@@ -1,8 +1,8 @@
-# Use the penultimate stable version of Debian
-FROM debian:bullseye-slim
+# Use Alpine Linux 3.14
+FROM alpine:3.14
 
 # Install NGINX and necessary packages
-RUN apt-get update && apt-get install -y nginx openssl && rm -rf /var/lib/apt/lists/*
+RUN apk update && apk add --no-cache nginx openssl
 
 # Create directory for SSL certificates
 RUN mkdir -p /etc/nginx/ssl
@@ -23,5 +23,3 @@ EXPOSE 443
 
 # Start NGINX
 CMD ["nginx", "-g", "daemon off;"]
-
-
