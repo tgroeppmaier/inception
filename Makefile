@@ -11,6 +11,8 @@ down:
 
 clean: down
 	docker compose -f ./srcs/docker-compose.yml down --volumes --rmi all --remove-orphans
+	sudo rm -rf /home/${USER}/data/wordpress/*
+	sudo rm -rf /home/${USER}/data/mysql/*
 
 re: clean all
 
