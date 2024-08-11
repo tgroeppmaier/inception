@@ -20,16 +20,14 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
     mysql -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';"
     mysql -e "FLUSH PRIVILEGES;"
 
-    # Kill the temporary MySQL daemon
-    killall mysqld
-    
+    # No need to kill MySQL here
     echo "Database initialized successfully"
 else
     echo "Database already initialized"
 fi
 
 # Start MySQL in the foreground
-exec mysqld --user=mysql
+exec mysqld --user=mysql --console
 
 # #!/bin/bash
 # set -e
