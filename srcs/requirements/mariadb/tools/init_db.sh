@@ -20,8 +20,10 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
     mysql -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';"
     mysql -e "FLUSH PRIVILEGES;"
 
-    # No need to kill MySQL here
     echo "Database initialized successfully"
+
+    # Stop MySQL server
+    mysqladmin -u root shutdown
 else
     echo "Database already initialized"
 fi

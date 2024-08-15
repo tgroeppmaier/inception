@@ -42,21 +42,23 @@ COPY conf/www.conf /etc/php7/php-fpm.d/www.conf
 COPY tools/wp-config-create.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/wp-config-create.sh
 
-# Set working directory
+# Set working directory# CMD ["/bin/sh", "-c", "/usr/local/bin/wp-config-create.sh && php-fpm7 -F"]
 WORKDIR /var/www/html
 
 # Expose port 9000 for PHP-FPM
 EXPOSE 9000
 
-# Create entrypoint script
-RUN echo '#!/bin/sh' > /entrypoint.sh \
-    && echo 'set -e' >> /entrypoint.sh \
-    && echo '/usr/local/bin/wp-config-create.sh' >> /entrypoint.sh \
-    && echo 'exec php-fpm7 -F' >> /entrypoint.sh \
-    && chmod +x /entrypoint.sh
+CMD ["/bin/sh", "-c", "/usr/local/bin/wp-config-create.sh && php-fpm7 -F"]
 
-# Use the entrypoint script
-ENTRYPOINT ["/entrypoint.sh"]
+# # Create entrypoint script
+# RUN echo '#!/bin/sh' > /entrypoint.sh \
+#     && echo 'set -e' >> /entrypoint.sh \
+#     && echo '/usr/local/bin/wp-config-create.sh' >> /entrypoint.sh \
+#     && echo 'exec php-fpm7 -F' >> /entrypoint.sh \
+#     && chmod +x /entrypoint.sh
+
+# # Use the entrypoint script
+# ENTRYPOINT ["/entrypoint.sh"]
 
 # FROM alpine:3.14
 
