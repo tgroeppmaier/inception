@@ -1,5 +1,4 @@
-# Use Alpine Linux 3.14
-FROM alpine:3.14
+FROM alpine:3.19
 
 # Install NGINX and necessary packages
 RUN apk update && apk add --no-cache nginx openssl
