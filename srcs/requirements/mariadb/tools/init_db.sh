@@ -7,7 +7,8 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
     mysql_install_db --user=mysql --datadir=/var/lib/mysql
 
     # Start MySQL server in the background
-    mysqld --user=mysql &
+    mysqld --user=mysql --skip-networking &
+    mysql_pid=$!
 
     # Wait for MySQL to be ready
     until mysqladmin ping -h"localhost" --silent; do
@@ -16,6 +17,8 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 
     # Run the initialization commands
     mysql -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
+    mysql -e "CREATE USER 'wpuser42'@'wordpress' IDENTIFIED BY 'password';"
+    mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser42'@'wordpress';"
     mysql -e "CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
     mysql -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';"
     mysql -e "FLUSH PRIVILEGES;"
@@ -24,6 +27,7 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 
     # Stop MySQL server
     mysqladmin -u root shutdown
+    wait $mysql_pid
 else
     echo "Database already initialized"
 fi

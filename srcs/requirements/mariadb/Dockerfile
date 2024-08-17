@@ -11,6 +11,6 @@ COPY ./tools/init_db.sh /
 
 RUN chmod +x /init_db.sh
 
-EXPOSE 3306
+# EXPOSE 3306
 
 ENTRYPOINT [ "sh", "/init_db.sh"]

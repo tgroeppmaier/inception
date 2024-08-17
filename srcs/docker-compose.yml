@@ -16,6 +16,7 @@ services:
     restart: always
     networks:
       - inception_network
+    container_name: nginx_cont
 
   wordpress:
     build: 
@@ -31,13 +32,14 @@ services:
       mariadb:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "php", "-v"]
+      test: ["CMD", "php83", "-v"]
       interval: 10s
       timeout: 5s
       retries: 3
     restart: always
     networks:
       - inception_network
+    container_name: wordpress_cont
 
   mariadb:
     build:
@@ -50,8 +52,6 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    ports:
-      - "3306:3306" 
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
       interval: 10s
@@ -60,6 +60,7 @@ services:
     restart: always
     networks:
       - inception_network
+    container_name: mariadb_cont
 
 volumes:
   wordpress_data:
