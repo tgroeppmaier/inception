@@ -17,11 +17,12 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 
     # Run the initialization commands
     mysql -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
-    mysql -e "CREATE USER 'wpuser42'@'wordpress' IDENTIFIED BY 'password';"
-    mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser42'@'wordpress';"
-    mysql -e "CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
-    mysql -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';"
+    mysql -e "CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'172.18.0.3' IDENTIFIED BY '${MYSQL_PASSWORD}';"
+    mysql -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'172.18.0.3';"
     mysql -e "FLUSH PRIVILEGES;"
+    # Remove anonymous users
+    # mysql -e "DELETE FROM mysql.user WHERE User='';"
+    # mysql -e "FLUSH PRIVILEGES;"
 
     echo "Database initialized successfully"
 
@@ -33,7 +34,8 @@ else
 fi
 
 # Start MySQL in the foreground
-exec mysqld --user=mysql --console
+mysqld_safe --user=mysql --console
+# exec mysqld_safe --user=mysql --console
 
 
 # #!/bin/sh

@@ -20,8 +20,6 @@ RUN rm -f /etc/nginx/conf.d/default.conf
 # Copy custom nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 443
-EXPOSE 443
 
 # Start NGINX
 CMD ["nginx", "-g", "daemon off;"]
