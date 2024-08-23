@@ -1,7 +1,7 @@
 FROM alpine:3.19
 
 # Install NGINX and necessary packages
-RUN apk -U upgrade && apk add --no-cache nginx openssl
+RUN apk -U upgrade && apk add --no-cache nginx openssl openrc
 
 # Create www-data user and adds it to (pre existing on debian nginx install) www-data group
 RUN adduser -S -G www-data www-data

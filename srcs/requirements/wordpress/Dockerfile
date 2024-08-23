@@ -22,7 +22,8 @@ RUN apk -U upgrade && apk add --no-cache \
     php83-simplexml \
     wget \
     unzip \
-    mysql-client
+    mysql-client \
+    openrc
 
 # Create the www-data user and group
 RUN adduser -D -S -H -u 82 -G www-data www-data
