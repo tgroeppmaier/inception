@@ -1,9 +1,9 @@
 FROM alpine:3.19
 
 # Install NGINX and necessary packages
-RUN apk update && apk add --no-cache nginx openssl
+RUN apk -U upgrade && apk add --no-cache nginx openssl
 
-# Create www-data user and group
+# Create www-data user and adds it to (pre existing on debian nginx install) www-data group
 RUN adduser -S -G www-data www-data
 
 # Create directory for SSL certificates
@@ -19,7 +19,6 @@ RUN rm -f /etc/nginx/conf.d/default.conf
 
 # Copy custom nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
-
 
 # Start NGINX
 CMD ["nginx", "-g", "daemon off;"]

@@ -1,7 +1,7 @@
 FROM alpine:3.19
 
 # Install dependencies
-RUN apk update && apk add --no-cache \
+RUN apk -U upgrade && apk add --no-cache \
     php83 \
     php83-fpm \
     php83-mysqli \
