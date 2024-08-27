@@ -12,9 +12,6 @@ RUN apk -U upgrade && apk add --no-cache \
     php-session \
     php-mbstring \
     php-phar \
-    mysql-client \
-    wget \
-    openrc \
     php-zlib \
     php-intl \
     php-dom \
@@ -23,7 +20,23 @@ RUN apk -U upgrade && apk add --no-cache \
     php-gd \
     php-iconv \
     php-simplexml \
-    unzip 
+    php-exif \
+    php-fileinfo \
+    php82-pecl-imagick \
+    # php-imagick \
+    php-zip \
+    mysql-client \
+    wget \
+    openrc 
+    # php-zlib \
+    # php-intl \
+    # php-dom \
+    # php-xmlreader \
+    # php-ctype \
+    # php-gd \
+    # php-iconv \
+    # php-simplexml \
+    # unzip 
 
 # Create the www-data user and group
 RUN adduser -D -S -H -u 82 -G www-data www-data

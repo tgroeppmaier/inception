@@ -3,6 +3,9 @@ set -e
 
 if [ ! -f /usr/local/bin/wp ]; then
   echo "Installing WP"
+  
+
+
 # Download WP-CLI
 wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
@@ -26,8 +29,6 @@ wp core download --allow-root
 # Create wp-config.php
 wp config create --allow-root --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=$MYSQL_HOST
 
-# wp db create --allow-root
-
 # Install WordPress
 wp core install --allow-root --url=$DOMAIN_NAME --title=$WP_TITLE --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL
 
@@ -36,6 +37,7 @@ find /var/www/html -type d -exec chmod 755 {} \;
 find /var/www/html -type f -exec chmod 644 {} \;
 
 echo "WP installed successfully"
+
 else
   echo "WP already installed."
 fi

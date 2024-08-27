@@ -21,5 +21,8 @@ RUN rm -f /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Start NGINX
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx"]
+
+# 
+# CMD ["-g", "daemon off;"]
 

@@ -11,4 +11,4 @@ COPY ./tools/init_db.sh /
 
 RUN chmod +x /init_db.sh
 
-ENTRYPOINT [ "sh", "/init_db.sh"]
+ENTRYPOINT ["/init_db.sh"]
