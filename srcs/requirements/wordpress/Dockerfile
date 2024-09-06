@@ -23,37 +23,35 @@ RUN apk -U upgrade && apk add --no-cache \
     php-exif \
     php-fileinfo \
     php82-pecl-imagick \
-    # php-imagick \
     php-zip \
     mysql-client \
     wget \
-    openrc 
-    # php-zlib \
-    # php-intl \
-    # php-dom \
-    # php-xmlreader \
-    # php-ctype \
-    # php-gd \
-    # php-iconv \
-    # php-simplexml \
-    # unzip 
+    openrc \
+    php-zlib \
+    php-intl \
+    php-dom \
+    php-xmlreader \
+    php-ctype \
+    php-gd \
+    php-iconv \
+    php-simplexml \
+    php-tokenizer \
+    unzip 
 
 # Create the www-data user and group
-RUN adduser -D -S -H -u 82 -G www-data www-data
+RUN adduser -D -S -H -u 82 -G www-data www-data 
 
 # Create the /var/www/html directory
 RUN mkdir -p /var/www/html
 
 # Install WordPress
 RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
-    # wget https://wordpress.org/latest.tar.gz \
-    # && tar -xzvf latest.tar.gz \
-    # && mv wordpress/* /var/www/html/ \
-    # && rm latest.tar.gz \
+&& chmod -R 755 /var/www/html
 
 # Configure PHP-FPM
 COPY conf/www.conf /etc/php82/php-fpm.d/www.conf
+
+RUN chown -R www-data:www-data  /etc/php82/php-fpm.d/www.conf
 
 # Set up WordPress configuration
 COPY tools/wp-config-create.sh /usr/local/bin/
