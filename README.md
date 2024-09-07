@@ -12,5 +12,16 @@ Docker runs on the docker engine, which is a client-server application with seve
 ## Nginx
 Nginx is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache.
 
-### Nginx 
+### Nginx Configuration
 Master process as root user because only root can access low numbered (sub 1000) ports and worker processes as non-root user. 
+
+Test and locate nginx.conf file:
+
+``` bash
+nginx -t
+$ nginx -t -c /etc/nginx/nginx.conf
+```
+
+See all loaded configuration files:
+`nginx -T`
+

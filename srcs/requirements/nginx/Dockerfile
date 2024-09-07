@@ -15,7 +15,7 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -subj "/C=XX/ST=STATE/L=CITY/O=ORGANIZATION/OU=UNIT/CN=tgroeppm.42.fr"
 
 # Remove default nginx configuration
-RUN rm -f /etc/nginx/conf.d/default.conf
+# RUN rm -f /etc/nginx/conf.d/default.conf
 
 # Copy custom nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
@@ -23,6 +23,6 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # Start NGINX
 ENTRYPOINT ["nginx"]
 
-# 
-# CMD ["-g", "daemon off;"]
+# Set the default command to run NGINX
+CMD ["-g", "daemon off;"]
 
