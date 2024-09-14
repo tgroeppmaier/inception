@@ -44,14 +44,8 @@ RUN adduser -D -S -H -u 82 -G www-data www-data
 # Create the /var/www/html directory
 RUN mkdir -p /var/www/html
 
-# Install WordPress
-RUN chown -R www-data:www-data /var/www/html \
-&& chmod -R 755 /var/www/html
-
 # Configure PHP-FPM
 COPY conf/www.conf /etc/php82/php-fpm.d/www.conf
-
-RUN chown -R www-data:www-data  /etc/php82/php-fpm.d/www.conf
 
 # Set up WordPress configuration
 COPY tools/wp-config-create.sh /usr/local/bin/
