@@ -1,6 +1,6 @@
 FROM alpine:3.19
 
-# Install dependencies
+# Install necessary packages
 RUN apk -U upgrade && apk add --no-cache \
     php \
     php-fpm \
@@ -38,8 +38,11 @@ RUN apk -U upgrade && apk add --no-cache \
     php-tokenizer \
     unzip 
 
-# Create the www-data user and group
-RUN adduser -D -S -H -u 82 -G www-data www-data 
+# Create the group 'website1' with a specific GID
+RUN addgroup -g 1001 -S website1
+
+# Create the user 'website1' with a specific UID and add it to the 'website1' group
+RUN adduser -u 1001 -G website1 -S -H website1
 
 # Create the /var/www/html directory
 RUN mkdir -p /var/www/html

@@ -1,6 +1,11 @@
+SHELL := /bin/bash
+
+WORDPRESS_DATA_PATH := /home/${USER}/data/wordpress
+MYSQL_DATA_PATH := /home/${USER}/data/mysql
+
 all: build up
 
-build:
+build: create_dirs
 	docker compose -f ./srcs/docker-compose.yml build
 
 up:
@@ -14,8 +19,12 @@ clean: down
 	docker volume prune -f
 	docker network prune -f
 	docker system prune -a -f --volumes
-	sudo rm -rf /home/${USER}/data/wordpress/*
-	sudo rm -rf /home/${USER}/data/mysql/*
+	sudo rm -rf $(WORDPRESS_DATA_PATH)
+	sudo rm -rf $(MYSQL_DATA_PATH)
+
+create_dirs:
+	mkdir -p $(WORDPRESS_DATA_PATH)
+	mkdir -p $(MYSQL_DATA_PATH)
 
 re: clean all
 

@@ -20,9 +20,11 @@ wp config create --allow-root --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --db
 # Install WordPress
 wp core install --allow-root --url=$DOMAIN_NAME --title=$WP_TITLE --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL
 
-chown -R www-data:www-data /var/www/html
-find /var/www/html -type d -exec chmod 755 {} \;
-find /var/www/html -type f -exec chmod 644 {} \;
+chown -R website1:website1 /var/www/html
+find /var/www/html -type d -exec chmod 750 {} \;
+find /var/www/html -type f -exec chmod 640 {} \;
+
+# chmod /var/www/html/
 
 echo "WP installed successfully"
 
