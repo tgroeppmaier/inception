@@ -18,7 +18,7 @@ RUN adduser -u 1001 -G website1 -S -H website1
 RUN adduser nginx website1
 
 # Copy custom nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY /conf/nginx.conf /etc/nginx/nginx.conf
 
 # Start NGINX
 ENTRYPOINT ["nginx"]
