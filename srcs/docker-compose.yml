@@ -10,6 +10,8 @@ services:
     environment:
       - DOMAIN_NAME=${DOMAIN_NAME}
       - SSL_DAYS_VALID=365
+    depends_on:
+      - wordpress
     restart: always
     networks:
       - inception_network
@@ -30,7 +32,12 @@ services:
     - WP_ADMIN_USER=${WP_ADMIN_USER}
     - WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}
     - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
-    - MYSQL_HOST=${MYSQL_HOST}  
+    - MYSQL_HOST=${MYSQL_HOST} 
+    healthcheck:
+      test: ["CMD", "php", "-v"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
     depends_on:
       mariadb:
         condition: service_healthy

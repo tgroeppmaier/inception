@@ -24,8 +24,6 @@ chown -R website1:website1 /var/www/html
 find /var/www/html -type d -exec chmod 750 {} \;
 find /var/www/html -type f -exec chmod 640 {} \;
 
-# chmod /var/www/html/
-
 echo "WP installed successfully"
 
 else
@@ -33,4 +31,3 @@ else
 fi
 
 php-fpm82 -F -R
-# su -s /bin/sh www-data -c "php-fpm82 -F"
