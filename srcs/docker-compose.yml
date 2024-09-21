@@ -19,8 +19,7 @@ services:
     cap_drop:
       - ALL
     cap_add:
-      - NET_BIND_SERVICE  # Allow binding to ports below 1024 (e.g., 80, 443)
-      - CHOWN             # Allow changing file ownership
+      - CHOWN
       - DAC_OVERRIDE
       - FOWNER
       - setgid
@@ -57,8 +56,7 @@ services:
     cap_drop:
       - ALL
     cap_add:
-      - NET_BIND_SERVICE  # Allow binding to ports below 1024 (e.g., 80, 443)
-      - CHOWN             # Allow changing file ownership
+      - CHOWN
       - DAC_OVERRIDE
       - FOWNER
       - setgid
@@ -87,7 +85,7 @@ services:
     cap_drop:
       - ALL
     cap_add:
-      - CHOWN             # Allow changing file ownership
+      - CHOWN
       - DAC_OVERRIDE
       - FOWNER
       - setgid
