@@ -7,6 +7,7 @@ services:
       - "443:443"
     volumes:
       - wordpress_data:/var/www/html
+      # - adminer_data:/var/www/html/adminer
     environment:
       - DOMAIN_NAME=${DOMAIN_NAME}
       - SSL_DAYS_VALID=365
@@ -22,8 +23,8 @@ services:
       - CHOWN
       - DAC_OVERRIDE
       - FOWNER
-      - setgid
-      - setuid
+      - SETGID
+      - SETUID
 
   wordpress:
     build: 
@@ -32,15 +33,15 @@ services:
     volumes:
       - wordpress_data:/var/www/html
     environment:
-    - DOMAIN_NAME=${DOMAIN_NAME}
-    - MYSQL_DATABASE=${MYSQL_DATABASE}
-    - MYSQL_USER=${MYSQL_USER}
-    - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-    - WP_TITLE=${WP_TITLE}
-    - WP_ADMIN_USER=${WP_ADMIN_USER}
-    - WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}
-    - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
-    - MYSQL_HOST=${MYSQL_HOST} 
+      - DOMAIN_NAME=${DOMAIN_NAME}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - WP_TITLE=${WP_TITLE}
+      - WP_ADMIN_USER=${WP_ADMIN_USER}
+      - WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}
+      - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
+      - MYSQL_HOST=${MYSQL_HOST} 
     healthcheck:
       test: ["CMD", "php", "-v"]
       interval: 10s
@@ -59,8 +60,8 @@ services:
       - CHOWN
       - DAC_OVERRIDE
       - FOWNER
-      - setgid
-      - setuid
+      - SETGID
+      - SETUID
 
   mariadb:
     build:
@@ -88,8 +89,24 @@ services:
       - CHOWN
       - DAC_OVERRIDE
       - FOWNER
-      - setgid
-      - setuid
+      - SETGID
+      - SETUID
+
+  adminer:
+    build:
+      context: ./requirements/bonus/adminer
+      dockerfile: Dockerfile
+    # environment:
+    #   - ADMINER_DEFAULT_SERVER=mariadb
+    restart: always
+    ports:
+      - 9000
+    depends_on:
+      - mariadb
+    networks:
+      - inception_network
+    container_name: adminer_cont
+
 
 volumes:
   wordpress_data:
@@ -104,6 +121,12 @@ volumes:
       type: none
       device: /home/${USER}/data/mysql
       o: bind
+  # adminer_data:
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     device: /home/${USER}/data/adminer
+  #     o: bind
 
 networks:
   inception_network:
