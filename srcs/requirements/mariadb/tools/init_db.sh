@@ -15,12 +15,17 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
         sleep 1
     done
 
-# Run the initialization commands
+    # Run the initialization commands
     mysql <<EOF
 CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
-CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'172.18.0.4' IDENTIFIED BY '${MYSQL_PASSWORD}';
-GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'172.18.0.4';
+CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'wordpress_cont.srcs_inception_network' IDENTIFIED BY '${MYSQL_PASSWORD}';
+GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'wordpress_cont.srcs_inception_network';
 FLUSH PRIVILEGES;
+
+CREATE USER IF NOT EXISTS 'root'@'adminer_cont.srcs_inception_network' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'adminer_cont.srcs_inception_network' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
 DELETE FROM mysql.user WHERE User='';
 FLUSH PRIVILEGES;
 EOF

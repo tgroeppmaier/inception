@@ -105,3 +105,10 @@ WordPress is an open source website builder and content management system (CMS).
 A content management system (CMS) is software that helps users create, manage, and modify content on a website without the need for technical knowledge.  
 **PHP** is the most popular server-side scripting language in web development.  
 PHP-FPM works as a process manager, managing PHP processes and handling PHP requests separately from the web server. By doing so, it can efficiently handle multiple PHP requests concurrently, leading to a significant reduction in latency and improved overall performance.
+
+Test connection to the database container
+
+``` bash
+mysql -u root -p
+mysql -h mariadb -u root -p
+```
