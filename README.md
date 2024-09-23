@@ -78,11 +78,21 @@ By using containers, each component is isolated and can be managed independently
 
 ### File permissions
 
-https://www.getpagespeed.com/server-setup/nginx-and-php-fpm-what-my-permissions-should-be
 
+## Dockerfile
+
+Docker can build images automatically by reading the instructions from a Dockerfile. A Dockerfile is a text document that contains all the commands a user could call on the command line to assemble an image. This page describes the commands you can use in a Dockerfile.
+
+## Useful Resources
+
+https://www.getpagespeed.com/server-setup/nginx-and-php-fpm-what-my-permissions-should-be
 https://www.plesk.com/blog/various/wordpress-file-permissions/
 
+- [Dockerfile reference](https://docs.docker.com/reference/dockerfile/)
 
+- [Publishing vs Exposing Ports in Docker](https://spacelift.io/blog/docker-expose-port)
+- [Securing Docker through dropping capabilities](https://www.redhat.com/en/blog/secure-your-containers-one-weird-trick)
+- 
 
 ## Nginx
 

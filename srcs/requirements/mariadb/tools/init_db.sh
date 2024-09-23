@@ -39,5 +39,5 @@ else
     echo "Database already initialized"
 fi
 
-# Start MySQL in the foreground
+# Start MySQL in safe mode
 mysqld_safe

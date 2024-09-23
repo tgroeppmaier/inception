@@ -1,6 +1,9 @@
 FROM alpine:3.19
 
-RUN apk -U upgrade && apk add --no-cache mariadb mariadb-client openrc
+RUN apk -U upgrade && apk add --no-cache \
+    mariadb \
+    mariadb-client \
+    openrc
 
 RUN mkdir -p /var/run/mysqld /var/lib/mysql \
     && chown -R mysql:mysql /var/run/mysqld \

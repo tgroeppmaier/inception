@@ -30,4 +30,4 @@ else
   echo "WP already installed."
 fi
 
-php-fpm82 -F
+php-fpm82
