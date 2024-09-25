@@ -26,6 +26,9 @@ create_dirs:
 	mkdir -p $(WORDPRESS_DATA_PATH)
 	mkdir -p $(MYSQL_DATA_PATH)
 
+copy_env:
+	cp ../.env ./srcs/
+
 re: clean all
 
 .PHONY: all build up down clean re
