@@ -5,7 +5,7 @@ MYSQL_DATA_PATH := /home/${USER}/data/mysql
 
 all: build up
 
-build: create_dirs
+build: create_dirs copy_env
 	docker compose -f ./srcs/docker-compose.yml build
 
 up:
