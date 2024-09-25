@@ -27,7 +27,7 @@ create_dirs:
 	mkdir -p $(MYSQL_DATA_PATH)
 
 copy_env:
-	cp ../.env ./srcs/
+	cp /home/${USER}/.env ./srcs/
 
 re: clean all
 
